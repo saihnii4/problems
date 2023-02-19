@@ -18,7 +18,7 @@ int main() {
 
         for (int p = 2; p <= b; next_prime(&p, sieve)) {
             for (int j = 2*p; j <= b; j+=p) {
-                if (p >= a && p <= b) printf("%d\n", p);
+                printf("%d\n", p);
                 if (sieve & (1 << (j-1))) sieve ^= (1 << j) >> 1;
             }
         }
