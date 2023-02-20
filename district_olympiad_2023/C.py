@@ -1,4 +1,3 @@
-from ctypes import wstring_at
 import itertools
 
 a, b = [*map(int, input().split(" "))]
@@ -9,6 +8,7 @@ def _hash(arr):
     hash = 0
 
     for i in range(len(arr)):
+        # we essentially turn a nxn matrix into a (n+2)x(n+2) one with the added bits being reiterations of the edge 
         lb_diag = i + b - 1
         rb_diag = i + b + 1
         ru_diag = i - b + 1
@@ -19,9 +19,6 @@ def _hash(arr):
 
         u = i - a
         d = i + a
-
-        if p < 0:
-            p = None
 
         if i//3 == 0:
             u = i + a*(b-1)
@@ -48,31 +45,26 @@ def _hash(arr):
                 rb_diag = None
 
         if i % a == 0:
-            lb_diag = None
-            lu_diag = None
-            p = None
+            p = i + a - 1
 
         if (i+1) % a == 0:
-            ru_diag = None
-            n = None
-            rb_diag = None
-
-        print(i)
-        #
-        # print("{} {} {}\n{} {} {}\n{} {} {}".format(
-        #     arr[lu_diag] if lu_diag is not None else -1,
-        #     arr[u] if u is not None else -1,
-        #     arr[ru_diag] if ru_diag is not None else -1,
-        #     arr[p] if p is not None else -1,
-        #     arr[i],
-        #     arr[n] if n is not None else -1,
-        #     arr[lb_diag] if lb_diag is not None else -1,
-        #     arr[d] if d is not None else -1,
-        #     arr[rb_diag] if rb_diag is not None else -1))
-        # print("\n\n")
+            n = a * (i // a)
+        
+        print("{} {} {}\n{} {} {}\n{} {} {}".format(
+            arr[lu_diag] if lu_diag is not None else -1,
+            arr[u] if u is not None else -1,
+            arr[ru_diag] if ru_diag is not None else -1,
+            arr[p] if p is not None else -1,
+            arr[i],
+            arr[n] if n is not None else -1,
+            arr[lb_diag] if lb_diag is not None else -1,
+            arr[d] if d is not None else -1,
+            arr[rb_diag] if rb_diag is not None else -1))
+        print("\n\n")
 
         map = ["Up: ", "Down: ", "Previous: ", "Next: ", "LB: ", "LU: ", "RU: ", "RB: "]
 
+        # here we convolute through the matrix
         for i, el in enumerate([u, d, p, n, lb_diag, lu_diag, ru_diag, rb_diag]):
             if el is None:
                 continue
