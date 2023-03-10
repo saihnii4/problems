@@ -4,10 +4,10 @@ int main() {
     int n;
     scanf("%d", &n);
 
-    double prod = 1;
+    float prod = 1.0f;
 
-    for (int i = 1; i <= n; i++) {
-        prod *= (1 + (1/(i*i)));
+    for (double i = 1; i <= n; i++) {
+        prod = prod * (1 + (1/(i*i)));
     }
 
     printf("%.3lf\n", prod);
