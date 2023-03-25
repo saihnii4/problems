@@ -1,54 +1,50 @@
-#include <stdio.h>
-#include <algorithm>
 #include <iostream>
+#include <string.h>
 #include <string>
+#include <set>
+
 using namespace std;
 
 int main() {
     string a;
-    bool c = false;
-
-    cin.ignore();
     cin >> a;
-    cout << a << endl;
 
-    string b = a;
-    string g = "";
+    bool odd = false;
+    string odd_appender = "";
 
-    sort(b.begin(), b.end());
+    string f = "";
 
-    char d, f = 'c';
+    set<char> letters;
+    
+    for (int i = 0; i < a.size(); i++) letters.insert(a[i]);
 
-    int e = 0;
-    for (int i = 0; i < b.size(); i++) {
-        if (i == 0) d = b[i];
-        if (b[i] == d) ++e;
-        if (b[i] != d) {
-            printf("%c %d\n", d, e);
-            if ((e & 1) != 0) {
-                if (c) {
-                    printf("NO SOLUTION\n");
-                    return 0;
-                }
+    for (char letter : letters) {
+        long long times = 0;
+        size_t pos = 0;
 
-                c = true;
-                f = b[i];
-                d = b[i];
-                e = 0;
-
-                continue;
-            }
-
-            for (int j = 0; j < (int)(e/2); j++) {
-                g += d;
-            }
-
-            e = 0;
-            d = b[i];
+        while (a.find(letter, pos) != string::npos) {
+            pos = a.find(letter, pos) + 1;
+            ++times;
         }
+
+        if ((times & 1) != 0) {
+            if (odd) {
+                printf("NO SOLUTION\n");
+                return 0;
+            }
+
+            odd = true;
+            for (int i = 0; i < times; i++) odd_appender += letter;
+            continue;
+        }
+
+        for (long long i = 0; i < (long long)(times / 2); i++) f += letter;
     }
 
-    g += f;
+    string e = f + odd_appender;
+    for (long long i = 0; i < f.size(); i++) e += f[f.size()-i-1];
 
-    cout << g << endl;
+    cout << e << endl;
+
+    return 0;
 }
