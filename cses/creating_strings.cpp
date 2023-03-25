@@ -1,21 +1,43 @@
 #include <stdio.h>
+#include <vector>
 #include <string>
 #include <iostream>
+#include <algorithm>
+#include <set>
 
-int main() {
-    int N = 4;
-    const char* a = "aacd";
+using namespace std;
 
-    for (int i = 0; i < N; i++) {
-        std::string b = "";
-        for (int j = 0; j < N; j++) if (i != j) {
-            for (int z = 0; z < N; z++) if (i != z && j != z) {
-                for (int k = 0; k < N; k++) if (i != k && j != k && z != k) {
-                    std::string b = "";
-                    b += std::string() + a[i] + a[j] + a[z] + a[k];
-                    std::cout << b << std::endl;
-                }
-            }
+set<string> poss;
+vector<string> letters;
+
+set<string> generate(int n, vector<string> avail) {
+    if (n <= 1) return set<string>(avail.begin(), avail.end());
+
+    set<string> poss;
+    for (string i : avail) {
+        vector<string> copy(avail.begin(), avail.end());
+        copy.erase(find(copy.begin(), copy.end(), i));
+
+        set<string> l = generate(n - 1, copy);
+
+        for (string k : l) {
+            poss.insert(i + k);
         }
     }
+
+    return poss;
+}
+
+int main() {
+    string a;
+    cin >> a;
+
+    for (char i : a) letters.push_back(std::string() + i);
+
+    set<string> poss = generate(a.size(), vector<string>(letters.begin(), letters.end()));
+    vector<string> po(poss.begin(), poss.end());
+    sort(po.begin(), po.end());
+
+    cout << po.size() << endl;
+    for (string p : po) cout << p << endl;
 }

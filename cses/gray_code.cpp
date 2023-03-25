@@ -15,8 +15,8 @@ vector<string> generate(int n) {
 
     vector<string> p = generate(n - 1);
     for (string l : p) {
-        mini_poss.push_back(l + '0');
-        mini_poss.push_back(l + '1');
+        mini_poss.push_back('0' + l);
+        mini_poss.push_back('1' + l);
     }
 
     return mini_poss;
