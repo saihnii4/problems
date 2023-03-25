@@ -20,7 +20,7 @@ int main() {
             continue;
         }
 
-        if (a != b && max(a, b) - 2 * min(a, b) != 0) {
+        if (a != b && (max(a, b) - 2 * min(a, b) > 0)) {
             printf("NO\n");
             continue;
         }
