@@ -1,36 +1,27 @@
-// gray code time
-
-#include <stdio.h>
-#include <algorithm>
-#include <iostream>
-#include <vector>
-#include <string>
-
+#include <bits/stdc++.h>
 using namespace std;
 
-vector<string> generate(int n) {
-    if (n <= 1) return vector<string>{"0", "1"};
-
-    vector<string> mini_poss;
-
-    vector<string> p = generate(n - 1);
-    for (string l : p) {
-        mini_poss.push_back('0' + l);
-        mini_poss.push_back('1' + l);
-    }
-
-    return mini_poss;
-}
 
 int main() {
     int n;
-    scanf("%d", &n);
-
-    vector<string> fuckme = generate(n);
-
-    sort(fuckme.begin(), fuckme.end());
-
-    for (string s : fuckme) {
-        cout << s << endl;
+    cin >> n;
+    vector<string> gray_code;
+    gray_code.push_back("");
+    for (int i = 0; i < n; i++) {
+        int size = gray_code.size();
+        for (int j = size - 1; j >= 0; j--) {
+            gray_code.push_back(gray_code[j]);
+        }
+        size *= 2;
+        for (int j = 0; j < size; j++) {
+            if (j < gray_code.size() / 2) {
+                gray_code[j] += "0";
+            } else {
+                gray_code[j] += "1";
+            }
+        }
+    }
+    for (int i = 0; i < gray_code.size(); i++) {
+        cout << gray_code[i] << endl;
     }
 }

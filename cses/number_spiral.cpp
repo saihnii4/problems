@@ -8,13 +8,12 @@ int main() {
 
     for (long long i = 0; i < T; i++) {
         long long x, y;
-        scanf("%lld %lld", &x, &y);
+        scanf("%lld %lld", &y, &x);
 
         long long sq = max(x, y);
         long long c = sq*sq-sq+1;
 
         if (x == y)  printf("%lld\n", c);
-        else if (x > y) printf("%lld\n", c - (x - y));
-        else if (x < y) printf("%lld\n", c + (y - x));
+        else printf("%lld\n", ((sq & 1) == 0) ? c - (x - y) : c + (x - y));
     }
 }

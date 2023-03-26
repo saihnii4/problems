@@ -12,7 +12,7 @@ int main() {
         long long n = 1;
         long long c = q;
 
-        long long f;
+        long long f = 0;
 
         for (long long b = 9; q > b; b += n * 9 * pow(10, n - 1)) {
             ++n;
@@ -21,13 +21,14 @@ int main() {
 
         c -= f;
 
-        long long place = c % n;
+        long long place = ((n - c) % n) + 1;
 
         long long group = (long long)((c - 1) / n);
 
-        printf("%lld\n", c);
-        printf("%lld\n", n);
-        printf("%lld\n", group);
-        printf("%lld\n", place);
+        printf("AHHH %lld %lld %lld", q, n, place);
+        group += pow(10, n - 1);
+
+        long long digit = (long long)((group % (long long)pow(10, place)) / pow(10, place - 1));
+        printf("%lld\n", digit);
     }
 }
