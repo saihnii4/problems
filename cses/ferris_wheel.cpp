@@ -33,14 +33,12 @@ int main() {
         child[i] = -1;
     
         // since child is already sorted, binary search in O(log n) maybe ???
-        for (int j = c; j >= 0 && (gondola != 0); j--) {
-            if (child[j] != child[c]) {
-                if (gondola - child[j] < 0) continue;
-                gondola -= child[j];
-                /* printf("%lld %d -> %d\n", gondola, i, j); */
-                child[j] = -1;
-                break;
-            }
+        for (int j = c; j >= 0 && (gondola != 0); j--) if (child[j] != child[c] && child[j] <= gondola) {
+            if (gondola - child[j] < 0) continue;
+            gondola -= child[j];
+            /* printf("%lld %d -> %d\n", gondola, i, j); */
+            child[j] = -1;
+            break;
         }
 
         ++count;
