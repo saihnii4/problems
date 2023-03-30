@@ -34,7 +34,7 @@ int main() {
     
         // since child is already sorted, binary search in O(log n) would make it faster maybe ???
         for (long long j = c; j >= 0 && (gondola != 0); j--) if (child[j] != child[c] && child[j] <= gondola) {
-            if (gondola - child[j] < 0) continue;
+            if (gondola - child[j] < 0) continue;a
             gondola -= child[j];
             /* printf("%lld k%d -> %d\n", gondola, i, j); */
             child[j] = -1;

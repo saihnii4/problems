@@ -1,47 +1,37 @@
-#include <iostream>
-#include <vector>
+#include <stdio.h>
 #include <algorithm>
+
+int N = 2e5;
 
 using namespace std;
 
 int main() {
-    int N, M;
+    int n , M, ppl[N], apt[N];
     long long K;
-    cin >> N >> M >> K;
+    scanf("%d %d %lld", &n, &M, &K);
 
-    vector<long long> ppl;
-    vector<long long> apt;
+    for (int i = 0; i < N; i++) scanf("%d", &ppl[i]);
+    for (int i = 0; i < M; i++) scanf("%d", &apt[i]);
 
-    for (int i = 0; i < N; i++) {
-        long long T;
-        cin >> T;
-        ppl.push_back(T);
-    }
+    sort(ppl, ppl+n);
+    sort(apt, apt+n);
 
-    for (int i = 0; i < M; i++) {
-        long long T;
-        cin >> T;
-        apt.push_back(T);
-    }
+    int i = 0, j = 0, count = 0;
 
-    sort(apt.begin(), apt.end());
-
-    int b = 0;
-
-    for (long long p : ppl) {
-        long long lower = p - K;
-        long long upper = p + K;
-
-        int i = -1;
-        for (i = apt.size() - 1; (apt[i] > upper || apt[i] < lower) && i >= 1; i /= 2) {
-            if (apt[i] < lower) i += 2*i;
-            printf("%lld %lld %lld %lld %d\n", apt[i], p, upper, lower, i);
+    while (i < n && j < M) {
+        if (abs(ppl[i] - apt[j]) <= K) {
+            ++i;
+            ++j;
+            ++count;
+        } else {
+            if (ppl[i] - apt[j] > K) {
+                ++j;
+            } else {
+                ++i;
+            }
         }
-        printf("BRUH : %lld %lld %lld %lld %d\n", apt[i], p, upper, lower, i);
-
-        if (i != 0 && (b ^ i) == 0) continue;
-        b ^= i;
-
-        /* printf("%lld %lld %d\n", p, apt[i], i); */
     }
+
+    printf("%d\n", count);
+
 }
