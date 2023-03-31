@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <vector>
 
-std::vector<int> a;
-std::vector<int> b;
+std::vector<long long> a;
+std::vector<long long> b;
 
-int max(int a, int b, int c) {
-  int t = a;
+long long max(long long a, long long b, long long c) {
+  long long t = a;
   if (b > t)
     t = b;
   if (c > t)
@@ -13,7 +13,7 @@ int max(int a, int b, int c) {
   return t;
 }
 
-int traverse(int i, int n) {
+long long traverse(long long i, long long n) {
   if (i == 0 && a[i] < 0)
     return traverse(1, n);
   if (i == n) {
@@ -21,19 +21,19 @@ int traverse(int i, int n) {
     return a[i];
   }
 
-  int value = max(a[i], a[i] + traverse(i + 1, n), 0);
+  long long value = max(a[i], a[i] + traverse(i + 1, n), 0);
   b.push_back(value);
   return value;
 }
 
 int main() {
-  int n, m;
+  long long n, m;
   bool d = true;
-  scanf("%d", &n);
+  scanf("%lld", &n);
 
-  for (int i = 0; i < n; i++) {
-    int l;
-    scanf("%d", &l);
+  for (long long i = 0; i < n; i++) {
+    long long l;
+    scanf("%lld", &l);
 
     if (l > 0) d = false;
 
@@ -44,14 +44,14 @@ int main() {
   }
 
   traverse(0, n);
-  int max = b[0];
+  long long max = b[0];
 
-  for (int i = 0; i < b.size(); i++)
+  for (long long i = 0; i < b.size(); i++)
     if (b[i] > max)
       max = b[i];
 
   if (d)
-    printf("%d\n", m);
+    printf("%lld\n", m);
   else
-    printf("%d\n", max);
+    printf("%lld\n", max);
 }
