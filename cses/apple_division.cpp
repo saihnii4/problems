@@ -1,29 +1,47 @@
 #include <stdio.h>
+#include <iostream>
 #include <math.h>
+#include <vector>
 
-// TODO: BAD CODE! Doesn't consider sets of 3
+using namespace std;
 
-int main() {
-    long long T, max, sum = 0;
-    scanf("%lld", &T);
+long long sum;
+int T;
+long long mid;
+long long minima = 1e9;
 
-    long long a[T];
+vector<long long> arr;
 
-    for (long long i = 0; i < T; i++) {
-        scanf("%lld", &a[i]);
-        if (i == 0) max = a[0];
-        if (a[i] > max) max = a[i];
-        sum += a[i];
+long long solve(int i, long long s, vector<long long> tmp)
+{
+    if (minima == 0) return minima;
+
+    if (i == T)
+        return 0;
+
+    if (abs(sum - 2 * s) < minima)
+        minima = abs(sum - 2 * s);
+
+    solve(i + 1, s, tmp);
+    solve(i + 1, s - tmp[i], tmp);
+
+    return minima;
+}
+
+int main()
+{
+    scanf("%d", &T);
+
+    for (int i = 0; i < T; i++)
+    {
+        long long t;
+        scanf("%lld", &t);
+        arr.push_back(t);
+        sum += t;
     }
 
-    long long diff = sum - 2*max;
+    solve(0, sum, arr);
 
-    if (diff < 0) printf("%d\n", diff);
-    else {
-        long long j, b;
-        for (long long i = 0; i < n; i++) {
-            j = abs(max - a[i]*2);
-            b = a[i];
-        }
-    }
+    printf("%lld\n", minima);
+    return 0;
 }
