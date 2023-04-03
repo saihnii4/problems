@@ -1,34 +1,31 @@
 #include <vector>
-#include <stdio.h>
 #include <algorithm>
+#include <stdio.h>
 
 using namespace std;
 
-int n, mx;
-
-int main() {
+int main()
+{
+    int n, max = 0;
     scanf("%d", &n);
+    long long arr[n];
 
-    vector<long long> playlist;
-
-    for (int i = 0; i < n; i++) {
-        long long t;
-        scanf("%lld", &t);
-        playlist.push_back(t);
-    }
+    for (int i = 0; i < n; i++)
+        scanf("%lld", &arr[i]);
 
     vector<long long> sub;
 
-    for (int i = 0; i < n; i++) {
-        if (sub.size() > mx) mx = sub.size();
+    for (int i = 0; i < n; i++)
+    {
+        sort(sub.begin(), sub.end());
+        if (find(sub.begin(), sub.end(), arr[i]) != sub.end())
+            sub.erase(sub.begin(), find(sub.begin(), sub.end(), arr[i]) + 1);
 
-        if (find(sub.begin(), sub.end(), playlist[i]) != sub.end()) {
-            sub = vector<long long>{};
-        }
+        sub.push_back(arr[i]);
 
-        sub.push_back(playlist[i]);
+        if (sub.size() > max)
+            max = sub.size();
     }
 
-    if (sub.size() > mx) mx = sub.size();
-    printf("%d\n", mx);
+    printf("%d\n", max);
 }
