@@ -1,4 +1,5 @@
 #include <vector>
+#include <set>
 #include <algorithm>
 #include <stdio.h>
 
@@ -9,6 +10,7 @@ int main()
     int n, max = 0;
     scanf("%d", &n);
     long long arr[n];
+    set<long long> songs;
 
     for (int i = 0; i < n; i++)
         scanf("%lld", &arr[i]);
@@ -17,10 +19,10 @@ int main()
 
     for (int i = 0; i < n; i++)
     {
-        sort(sub.begin(), sub.end());
-        if (find(sub.begin(), sub.end(), arr[i]) != sub.end())
+        if (songs.find(arr[i]) != songs.end())
             sub.erase(sub.begin(), find(sub.begin(), sub.end(), arr[i]) + 1);
 
+        songs.insert(arr[i]);
         sub.push_back(arr[i]);
 
         if (sub.size() > max)

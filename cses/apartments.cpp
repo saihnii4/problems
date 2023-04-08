@@ -14,7 +14,7 @@ int main() {
     for (int i = 0; i < M; i++) scanf("%d", &apt[i]);
 
     sort(ppl, ppl+n);
-    sort(apt, apt+n);
+    sort(apt, apt+M);
 
     int i = 0, j = 0, count = 0;
 
