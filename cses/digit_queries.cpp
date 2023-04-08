@@ -21,12 +21,11 @@ int main() {
 
         c -= f;
 
-        long long place = ((n - c) % n) + 1;
+        long long place = (c - 1) % n + 1;
+        long long group = (long long)((c-1) / n);
 
-        long long group = (long long)((c - 1) / n);
-
-        printf("AHHH %lld %lld %lld", q, n, place);
         group += pow(10, n - 1);
+        place = n - place + 1;
 
         long long digit = (long long)((group % (long long)pow(10, place)) / pow(10, place - 1));
         printf("%lld\n", digit);
