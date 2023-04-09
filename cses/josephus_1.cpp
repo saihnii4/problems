@@ -15,10 +15,9 @@ int main() {
     }
 
     while (cycle.size() != 0) {
-        if (i >= cycle.size()) i %= cycle.size();
         printf("%d", cycle[i]);
         cycle.erase(cycle.begin() + i);
-        i += 1;
+        i = (i + 1) % cycle.size();
         if (cycle.size() > 0) printf(" ");
     }
 

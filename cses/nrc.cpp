@@ -15,10 +15,6 @@ bool cmp(range r1, range r2) {
     return r1 != r2 && (r1.first <= r2.first) && (r1.second >= r2.second);
 }
 
-bool cmp2(range r1, range r2) {
-    return r1 != r2 && (r1.first >= r2.first) && (r1.second <= r2.second);
-}
-
 int main() {
     int n;
     scanf("%d", &n);
@@ -38,7 +34,7 @@ int main() {
     for (int i = 0; i < arr.size(); i++) { 
         range rng = arr[i];
         auto upp = upper_bound(arr.begin(), arr.end(), rng, cmp);
-        auto low = lower_bound(arr.begin(), arr.end(), rng, cmp2);
+        auto low = lower_bound(arr.begin(), arr.end(), rng, cmp);
 
         cout << rng.first << " " << rng.second << " " << (*low).first << " " << (*low).second << endl;
 
