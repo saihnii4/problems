@@ -1,7 +1,7 @@
 // still O(n) but less convoluted
 
-#include <stdio.h>
 #include <algorithm>
+#include <stdio.h>
 
 using namespace std;
 
@@ -12,8 +12,8 @@ int main() {
   scanf("%d", &n);
 
   for (int i = 0; i < n; i++) {
-      long long x;
-      scanf("%lld", &x);
+    long long x;
+    scanf("%lld", &x);
     m = max(m, x);
     s += x;
   }
