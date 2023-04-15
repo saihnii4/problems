@@ -1,3 +1,4 @@
+// verrry convoluted
 // luckily, an O(n) simulation will suffice :)
 
 #include <stdio.h>
@@ -12,7 +13,6 @@ long long time, turnabout;
 int main() {
     scanf("%d", &n);
     long long books[n];
-    bool turn = false, i_fin = false, j_fin = false; // i always starts
     int i = 0, j = n -1;
 
     for (int i = 0; i < n; i++) {
@@ -28,17 +28,18 @@ int main() {
     }
 
     while (j >= 0) {
-        /* printf("%d %d %lld %lld\n", i, j, time, turnabout); */
         if (i == j) {
             if (time < books[i]) time += books[i] - time;
             turnabout = time;
             --j;
             continue;
         }
+
         if (j == 0) {
             time += books[i] - (time - turnabout);
             break;
         }
+    
         if (i < n && time < books[j]) {
             time += books[i];
             ++i;

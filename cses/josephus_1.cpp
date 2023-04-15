@@ -1,24 +1,40 @@
 #include <stdio.h>
+#include <queue>
 #include <vector>
 
 using namespace std;
 
-vector<int> cycle;
+queue<int> q1;
+queue<int> q2;
 
 int main() {
     int n;
-    int i = 1;
     scanf("%d", &n);
 
     for (int i = 1; i <= n; i++) {
-        cycle.push_back(i);
+        q1.push(i);
     }
 
-    while (cycle.size() != 0) {
-        printf("%d", cycle[i]);
-        cycle.erase(cycle.begin() + i);
-        i = (i + 1) % cycle.size();
-        if (cycle.size() > 0) printf(" ");
+    int i = 0;
+
+    queue<int>* a = &q1;
+    queue<int>* b = &q2;
+
+    while (!((*a).empty() && (*b).empty())) {
+        ++i;
+        if ((*a).empty()) {
+            queue<int> tmp = *a;
+            *a = *b;
+            *b = tmp;
+        }
+
+        if ((i & 1) == 0) {
+            printf("%d ", (*a).front());
+            (*a).pop();
+        } else {
+            (*b).push((*a).front());
+            (*a).pop();
+        }
     }
 
     printf("\n");
