@@ -31,15 +31,17 @@ int main() {
     bool contains[n];
     bool is_contained[n];
 
-    for (int i = 0; i < arr.size(); i++) { 
-        range rng = arr[i];
+    int i = 0;
+    for (range rng : arr) { 
         auto upp = upper_bound(arr.begin(), arr.end(), rng, cmp);
         auto low = lower_bound(arr.begin(), arr.end(), rng, cmp);
 
         cout << rng.first << " " << rng.second << " " << (*low).first << " " << (*low).second << endl;
 
         contains[i] = upp != arr.end();
-        is_contained[i] = low != arr.begin();
+        is_contained[i] = low != arr.end();
+
+        ++i;
     }
 
     for (int i = 0; i < n; i++) {

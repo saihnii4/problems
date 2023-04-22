@@ -1,49 +1,29 @@
-// todo
-
-#include <stdio.h>
-#include <algorithm>
-#include <iostream>
 #include <set>
 #include <tuple>
+#include <queue>
+#include <stdio.h>
 
 using namespace std;
 
-typedef tuple<long long, long long> customer;
-multiset<customer> schedule;
-long long room = 1;
+typedef tuple<long long, long long, int> customer;
+typedef tuple<long long, int> slot;
+
+priority_queue< int, greater<int> > q;
+set<long long> available_rooms;
+multiset<customer> arr;
 int n;
 
-bool cmp(customer x, customer y) {
-    return get<1>(x) < get<0>(y);
-}
-
 int main() {
-    scanf("%d", &n);
+    scanf("%d\n", &n);
+    int rooms[n];
 
     for (int i = 0; i < n; i++) {
-        long long start, end;
-        scanf("%lld %lld", &start, &end);
-        schedule.insert(customer(start, end));
+        long long a, b;
+        scanf("%lld %lld", &a, &b);
+
+        arr.insert(customer(a, b, i));
     }
 
-    auto a = schedule.lower_bound(*(schedule.begin()));
-
-    while (a != schedule.end()) {
-        auto next = a;
-        ++next;
-        if (next == schedule.end()) break;
-        if (!cmp(*a, *next)){
-            schedule.erase(*a);
-            ++a;
-            continue;
-        }
-
-        ++a;
+    for (customer c : arr) {
     }
-
-    printf("%lld\n", schedule.size());
-
-    ++room;
-
-    return 0;
 }

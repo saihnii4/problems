@@ -7,15 +7,14 @@ using namespace std;
 int width, height;
 
 int count;
-int visited[1000][1000];
-bool adj[1000000];
+bool visited[1000][1000];
 
 bool solve(int x, int y) {
     if (x >= width || x < 0 || y >= height || y < 0 || visited[y][x] != 0) {
         return false;
     };
 
-    visited[y][x] = 1;
+    visited[y][x] = true;
 
     solve(x+1, y);
     solve(x, y+1);
@@ -34,7 +33,7 @@ int main() {
 
         for (int x = 0; x < row.size(); ++x) {
             if (row[x] - '#' == 0)
-                visited[i][x] = 2;
+                visited[i][x] = true;
         }
     }
 
