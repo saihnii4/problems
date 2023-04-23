@@ -8,8 +8,7 @@ using namespace std;
 typedef tuple<long long, long long, int> customer;
 typedef tuple<long long, int> slot;
 
-priority_queue< int, greater<int> > q;
-set<long long> available_rooms;
+priority_queue< int, greater<int> > available_rooms;
 multiset<customer> arr;
 int n;
 
@@ -25,5 +24,6 @@ int main() {
     }
 
     for (customer c : arr) {
+
     }
 }

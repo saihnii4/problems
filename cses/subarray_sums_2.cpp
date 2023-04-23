@@ -1,33 +1,31 @@
 #include <stdio.h>
-#include <map>
-#include <tuple>
-#include <math.h>
+#include <vector>
+#include <iostream>
+#include <unordered_map>
 #include <set>
 
 using namespace std;
 
-int ct, n;
-map<long long, int> freq;
-multiset<long long> b;
-long long x, sum;
+unordered_map<long long, int> sums;
+int n;
+long long k, sum, ct;
 
 int main() {
-    scanf("%d %lld", &n, &x);
+    scanf("%d %lld", &n, &k);
+    vector<long long> arr(n);
 
-    for (int i = 1; i <= n; i++) {
-        long long t;
-        scanf("%lld", &t);
-        sum += t;
-        b.insert(sum);
+    for (int i = 0; i < n; i++) cin >> arr[i];
+
+    sums[0] = 1;
+
+    for (long long x : arr) {
+        sum += x;
+
+        ct += sums[sum - k];
+        ++sums[sum];
     }
 
-    for (long long sum : b) {
-        if (b.find(x + sum) == b.end()) continue;
-        if (freq.find(x + sum) == freq.end())
-            freq[x + sum] = 0;
-        ct += b.count(x + sum) - freq[x + sum];
-        freq[x + sum]++;
-    }
+    printf("%lld\n", ct);
 
-    printf("%d\n", ct);
+    return 0;
 }
