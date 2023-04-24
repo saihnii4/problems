@@ -17,7 +17,7 @@ void traverse(int x, int y, int dist, string actions) {
     if (x == B_x && y == B_y) {
         min_dist = dist;
         min_path = actions;
-        return min_dist;
+        return;
     }
 
     board[y][x] = true;
