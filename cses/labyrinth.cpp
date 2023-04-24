@@ -11,6 +11,10 @@ int paths[1000][1000];
 int height, width, A_x, A_y, B_x, B_y, min_dist = INF;
 string min_path;
 
+bool impossible() {
+    return (B_x > 0 && board[B_y][B_x - 1]) || (B_x < width - 1 && board[B_y][B_x + 1]) || (B_y > 0 && board[B_y - 1][B_x]) || (B_y < height - 1 && board[B_y + 1][B_x]);
+}
+
 void traverse(int x, int y, int dist, string actions) {
     if (x < 0 || y < 0 || x >= width || y >= height || dist >= min_dist || paths[y][x] || board[y][x]) return;
 
@@ -62,7 +66,8 @@ int main() {
         }
     }
 
-    traverse(A_x, A_y, 0, "");
+    if (!impossible())
+        traverse(A_x, A_y, 0, "");
 
     if (min_dist != INF)
         cout << "YES" << endl << min_dist << endl << min_path << endl;
