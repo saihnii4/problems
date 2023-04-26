@@ -1,60 +1,55 @@
-// TODO:
-
-#include <stdio.h>
 #include <iostream>
-#include <utility>
-#include <algorithm>
-#include <vector>
 #include <set>
+#include <algorithm>
+#include <tuple>
+#include <utility>
+#include <stdio.h>
 
 using namespace std;
-
-typedef pair<long long, long long> range;
-
-bool cmp(range r1, range r2) {
-    return r1 != r2 && (r1.first <= r2.first) && (r1.second >= r2.second);
-}
 
 int main() {
     int n;
     scanf("%d", &n);
-
-    vector<range> arr;
-
-    for (int i = 0; i < n; i++) {
-        long long x, y;
-        scanf("%lld %lld", &x, &y);
-
-        arr.push_back(range(x, y));
-    }
-
-    bool contains[n];
     bool is_contained[n];
+    bool contains[n];
 
-    int i = 0;
-    for (range rng : arr) { 
-        auto upp = upper_bound(arr.begin(), arr.end(), rng, cmp);
-        auto low = lower_bound(arr.begin(), arr.end(), rng, cmp);
+    tuple<long long, long long, int> arr[n];
 
-        cout << rng.first << " " << rng.second << " " << (*low).first << " " << (*low).second << endl;
+    for (int i = 0; i < n; i++) {
+        long long a, b;
+        scanf("%lld %lld", &a, &b);
+        arr[i] = tuple<long long, long long, int>(a, b, i);
+    }
 
-        contains[i] = upp != arr.end();
-        is_contained[i] = low != arr.end();
+    sort(arr, arr + n);
 
-        ++i;
+    set< tuple<long long, long long, int> > sub;
+
+    for (int i = 0; i < n; i++) {
+        auto it = sub.lower_bound(tuple<long long, long long, int>(0, get<1>(arr[i]), 0));
+        is_contained[get<2>(arr[i])] = false;
+        contains[get<2>(arr[i])] = false;
+
+        if (it != sub.end()) {
+            is_contained[get<2>(arr[i])] = true;
+
+            while (it != sub.end()) {
+                contains[get<2>(*it)] = true;
+                ++it;
+            }
+
+        }
+
+        sub.insert(arr[i]);
     }
 
     for (int i = 0; i < n; i++) {
-        printf("%d", contains[i]);
-        if (i != n - 1) printf(" ");
+        cout << contains[n] << " ";
     }
-    printf("\n");
+    cout << endl;
 
     for (int i = 0; i < n; i++) {
-        printf("%d", is_contained[i]);
-        if (i != n - 1) printf(" ");
+        cout << is_contained[n] << " ";
     }
-    printf("\n");
-
-    return 0;
+    cout << endl;
 }
