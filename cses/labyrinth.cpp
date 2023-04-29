@@ -36,22 +36,22 @@ void traverse(int x, int y, int dist, string actions) {
 
   board[y][x] = true;
   if (x < width - 1)
-      traverse(x + 1, y, dist + 1, actions + "R");
+    traverse(x + 1, y, dist + 1, actions + "R");
   board[y][x] = false;
 
   board[y][x] = true;
   if (x > 0)
-      traverse(x - 1, y, dist + 1, actions + "L");
+    traverse(x - 1, y, dist + 1, actions + "L");
   board[y][x] = false;
 
   board[y][x] = true;
   if (y < height - 1)
-      traverse(x, y + 1, dist + 1, actions + "D");
+    traverse(x, y + 1, dist + 1, actions + "D");
   board[y][x] = false;
 
   board[y][x] = true;
   if (y > 0)
-      traverse(x, y - 1, dist + 1, actions + "U");
+    traverse(x, y - 1, dist + 1, actions + "U");
   board[y][x] = false;
 }
 
@@ -86,14 +86,12 @@ int main() {
     }
   }
 
-  if (!possible)
-      cout << "NO" << endl;
-  else {
-      cout << "YES" << endl;
-      traverse(A_x, A_y, 0, "");
-      cout << min_actions << endl;
-      cout << min_dist << endl;
+  traverse(A_x, A_y, 0, "");
+  if (min_dist < 1e5) {
+    cout << "YES" << endl;
+    cout << min_dist << endl;
+    cout << min_actions << endl;
+  } else {
+    cout << "NO" << endl;
   }
-
-  return 0;
 }

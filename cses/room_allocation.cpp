@@ -1,55 +1,51 @@
-#include <set>
 #include <algorithm>
-#include <vector>
-#include <tuple>
+#include <iostream>
 #include <queue>
-#include <stdio.h>
-
 using namespace std;
 
-typedef tuple<long long, long long, int> customer;
-typedef tuple<long long, int> occupation;
-typedef tuple<long long, int> slot;
+const int MAX_N = 2e5;
 
-priority_queue< int, vector<int>, greater<int> > q;
-set<slot> occupied;
-multiset<customer> arr;
-int n, mx;
+int N;
+int ans[MAX_N];
+vector<pair<pair<int, int>, int>> v(MAX_N);
 
 int main() {
-    scanf("%d\n", &n);
-    int room;
-    int rooms[n];
+	cin >> N;
+	v.resize(N);
+	for (int i = 0; i < N; i++) {
+		cin >> v[i].first.first >> v[i].first.second;
+		v[i].second = i;  // store the original index
+	}
+	sort(v.begin(), v.end());
 
-    for (int i = 0; i < n; i++) {
-        long long a, b;
-        scanf("%lld %lld", &a, &b);
+	int rooms = 0, last_room = 0;
+	priority_queue<pair<int, int>> pq;  // min heap to store departure times.
+	for (int i = 0; i < N; i++) {
+		if (pq.empty()) {
+			last_room++;
+			// make the departure time negative so that we create a min heap
+			// (cleanest way to do a min heap... default is max in c++)
+			pq.push(make_pair(-v[i].first.second, last_room));
+			ans[v[i].second] = last_room;
+		} else {
+			// accessing the minimum departure time
+			pair<int, int> minimum = pq.top();
+			if (-minimum.first < v[i].first.first) {
+				pq.pop();
+				pq.push(make_pair(-v[i].first.second, minimum.second));
+				ans[v[i].second] = minimum.second;
+			}
 
-        q.push(i);
-        arr.insert(customer(a, b, i));
-    }
+			else {
+				last_room++;
+				pq.push(make_pair(-v[i].first.second, last_room));
+				ans[v[i].second] = last_room;
+			}
+		}
 
-    for (customer c : arr) {
-        auto it = occupied.lower_bound(slot(get<0>(c) - 1, 0));
+		rooms = max(rooms, int(pq.size()));
+	}
 
-        if (it != occupied.end()) {
-            q.push(get<1>(*it));
-            while (it != occupied.begin()) {
-                --it;
-                q.push(get<1>(*it));
-            }
-            occupied.erase(*it);
-        }
-
-        occupied.insert(slot(get<1>(c), q.top()));
-        rooms[get<2>(c)] = q.top();
-        if (q.top() > mx) mx = q.top();
-        q.pop();
-    }
-
-    printf("%d\n", mx + 1);
-    for (int i = 0; i < n; i++) {
-        printf("%d ", rooms[i] + 1);
-    }
-    printf("\n");
+	cout << rooms << "\n";
+	for (int i = 0; i < N; i++) { cout << ans[i] << " "; }
 }

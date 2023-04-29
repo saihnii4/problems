@@ -1,0 +1,1 @@
+f=__import__("math").ceil;a,b,c=[*map(int, input().split(" "))];print(f(a/c)*f(b/c))

@@ -1,0 +1,1 @@
+a=lambda:[*map(int,input().split(' '))];_,c=a();d=a();g=d[c-1];z=lambda x:x>=g and x>0;print(len([*filter(z,d)]))
