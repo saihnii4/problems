@@ -6,17 +6,17 @@
 using namespace std;
 
 int n;
-int ct = 0;
-unordered_map<long long, int> m;
+long long ct = 0;
+unordered_map<long long, long long> m;
 
 int mod(int a, int b) {
-  return (a < 0) ? b-abs(a)% b : (a % b);
+  return (a < 0) ? (b+(a%b))%b : (a % b);
 }
 
 int main() {
   scanf("%d", &n);
   long long arr[n];
-  int mrq[n + 1];
+  long long mrq[n + 1];
 
   mrq[0] = 0;
 
@@ -33,5 +33,5 @@ int main() {
     ct += ((it.second)*(it.second-1)) >> 1;
   }
 
-  printf("%d\n", ct);
+  printf("%lld\n", ct);
 }
