@@ -69,7 +69,7 @@ int main() {
     ins(arr[i]);
   }
 
-  printf("%lld ", (k > 2) ? *a.rbegin() - _a + _b : _b - _a);
+  printf("%lld ", (k % 2 == 1) ? *a.rbegin() - _a + _b : _b - _a);
 
   for (int i = k; i < n; i++) {
     if (k == 1) {
@@ -80,7 +80,7 @@ int main() {
       ins(arr[i]);
     }
 
-    printf("%lld ", (k > 2) ? *a.rbegin() - _a + _b : _b - _a);
+    printf("%lld ", (k % 2 == 1) ? *a.rbegin() - _a + _b : _b - _a);
   }
 
   printf("\n");
