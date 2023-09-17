@@ -1,41 +1,33 @@
-#include <set>
-#include <math.h>
 #include <stdio.h>
+#include <limits.h>
+#include <set>
 
-#define INF 100000000
+using namespace std;
 
-int n, k;
-
-std::set<long long> coins;
-bool memoized[200001];
-long long memo[200001];
-
-long long min(long long a, long long b) {
-  return (a > b) ? b : a;
-}
-
-long long solve(int x) {
-  if (x < 0)
-    return -1;
-  if (x == 0)
-    return 0;
-
-  long long best = (long long)INF;
-  for (long long c : coins) {
-    best = min(best, solve(x-c) + 1);
-  }
-
-  return best;
-}
+int n;
+long long x;
+set<long long> c;
+long long dp[1000001];
 
 int main() {
-  scanf("%d %d", &n, &k);
+  scanf("%d %lld", &n, &x);
 
   for (int i = 0; i < n; i++) {
     long long t;
+    c.insert(t);
     scanf("%lld", &t);
-    coins.insert(t);
+  }
+  dp[0] = 0;
+
+  for (int i = 1; i <= n; x++) {
+    dp[i] = LLONG_MAX;
+    for (long long coin : c) {
+      if (x - coin >= 0) {
+        dp[i] = min(dp[i], dp[x-coin] + 1);
+      }
+    }
   }
 
-  printf("%lld\n", solve(k));
+  printf("%lld\n", dp[x]);
+  return 0;
 }

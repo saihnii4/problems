@@ -1,72 +1,31 @@
 #include <stdio.h>
+#include <limits.h>
 #include <set>
-#include <utility>
-#include <vector>
 
 using namespace std;
 
-typedef pair<long long, long long> pairwise;
-
-vector<long long> a;
-multiset<pairwise> b;
-
-long long x, y;
-
-long long max(long long a, long long b, long long c) {
-  long long t = a;
-  if (b > t)
-    t = b;
-  if (c > t)
-    t = c;
-  return t;
-}
-
-long long traverse(long long i, long long n, long long len) {
-  if (i == 0 && a[i] < 0)
-    return traverse(1, n, 1);
-  if (i == n) {
-    b.insert(pairwise(len, a[i]));
-    return a[i];
-  }
-
-  long long value = max(a[i], a[i] + traverse(i + 1, n, len + 1), 0);
-  b.insert(pairwise(len, value));
-  return value;
-}
+long long n, a, b, max_sum = LLONG_MIN;
+multiset<long long> c;
 
 int main() {
-  long long n, m;
-  bool d = true;
-  scanf("%lld %lld %lld", &n, &x, &y);
+  scanf("%lld %lld %lld", &n, &a, &b);
+  long long parr[n+1];
+  parr[0] = 0;
 
-  for (long long i = 0; i < n; i++) {
-    long long l;
-    scanf("%lld", &l);
-
-    if (l > 0) d = false;
-
-    if (i == 0 || l > m)
-      m = l;
-
-    a.push_back(l);
+  for (int i = 0; i < n; i++) {
+    scanf("%lld", &parr[i+1]);
+    parr[i+1] = parr[i] + parr[i+1];
   }
 
-  traverse(0, n, 1);
-  long long max = get<1>(*b.begin());
+  for (int i = a; i <= n; i++) {
+    if (i > b) {
+      c.erase(c.find(parr[i - b - 1]));
+    }
 
-  auto lbound = b.lower_bound(pairwise(x, 0));
-  auto ubound = b.upper_bound(pairwise(y, 0));
-
-  for (auto it = lbound; it != ubound; it++) {
-    long long val = get<1>(*it);
-    if (val > max)
-      max = val;
+    c.insert(parr[i - a]);
+    long long sum = parr[i] - *c.begin();
+    if (sum > max_sum) max_sum = sum;
   }
 
-  if (d)
-    printf("%lld\n", m);
-  else
-    printf("%lld\n", max);
-
-  return 0;
+  printf("%lld\n", max_sum);
 }
