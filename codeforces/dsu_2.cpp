@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <string>
 #include <iostream>
 #include <algorithm>
@@ -6,7 +5,7 @@
 using namespace std;
 
 string op;
-int n, quer, a, b, p[300001], q[300001], r[300001], d[300001];
+int n, quer, a, b, p[300002], q[300002], r[300002], d[300002];
 
 int find(int i) {
     if (i == p[i]) return i;
@@ -26,7 +25,9 @@ void merge(int a, int b) {
 }
 
 int main() {
-    scanf("%d %d", &n, &quer);
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cin >> n >> quer;
 
     for (int i = 1; i <= n; i++) {
         p[i] = i;
