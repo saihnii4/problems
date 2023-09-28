@@ -3,7 +3,7 @@
 using namespace std;
 
 int n;
-long long x, dp[10000001], MOD = (int)1e9 + 7;
+long long x, dp[1000001], MOD = (int)1e9 + 7;
 
 int main() {
   dp[0] = 1;
