@@ -32,7 +32,7 @@ node merge(node a, node b) {
 
 void build(ll id, ll L, ll R) { 
   if (L == R) {
-    seg[id] = {arr[L], max(0, arr[L]), max(0, arr[L]), max(0, arr[L])};
+    seg[id] = {arr[L], arr[L], arr[L], arr[L]};
     return;
   }
   
@@ -46,7 +46,7 @@ void build(ll id, ll L, ll R) {
 
 void update(ll id, ll L, ll R, ll el, ll val) {
   if (L == R) {
-    seg[id] = {val, max(0, val), max(0, val), max(0, val)};
+    seg[id] = {val, val, val, val};
     return;
   }
 
