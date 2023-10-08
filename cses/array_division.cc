@@ -15,12 +15,9 @@ bool valid(long long x, long long arr[]) {
       ++groups;
       sum = 0;
     }
-
     sum += arr[i];
   }
-
   if (sum > 0) ++groups;
-
   return groups <= k;
 }
 

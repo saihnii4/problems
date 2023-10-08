@@ -66,7 +66,7 @@ int main() {
 
   build(HEAD_NODE,0,n-1);
 
-  printf("%lld\n", max(0, seg[HEAD_NODE].sum));
+  printf("%lld\n", max(0, seg[HEAD_NODE].sol));
   
   for (int i = 0; i < m; i++) {
     ll index, val;
