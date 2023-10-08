@@ -1,18 +1,21 @@
 #include <stdio.h>
+#include <algorithm>
 
 using namespace std;
 
 int n;
-long long x, dp[1000001], MOD = (int)1e9 + 7;
+int x, dp[1000001], MOD = (int)1e9 + 7;
 
 int main() {
   dp[0] = 1;
-  scanf("%d %lld", &n, &x);
-  long long coins[n];
+  scanf("%d %d", &n, &x);
+  int coins[n];
 
   for (int i = 0; i < n; i++) {
-    scanf("%lld", &coins[i]);
+    scanf("%d", &coins[i]);
   }
+
+  sort(coins, coins + n);
 
   for (int j = 0; j < n; j++) {
     for (int i = 0; i <= x; i++) {
@@ -23,7 +26,7 @@ int main() {
     }
   }
 
-  printf("%lld\n", dp[x]);
+  printf("%d\n", dp[x]);
 
   return 0;
 }
