@@ -5,19 +5,10 @@ using ll = long long;
 int n;
 char c[100000];
 int ph[100000], pp[100000], ps[100000], m;
-int main()
-{
-  cin.tie(NULL);
-  ios_base::sync_with_stdio(false);
+int main() {
   freopen("hps.in", "r", stdin);
-  freopen("hps.out", "w", stdout);
+  freopen("hps.out", "w", stdin);
   cin >> n;
-  for (int i = 0; i < n; i++)
-  {
-    char t;
-    cin >> t;
-    c[i] = t;
-  }
   for (int i = 0; i < n; i++)
   {
     switch (c[i])

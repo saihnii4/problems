@@ -28,6 +28,7 @@ void update(ll id, ll L, ll R, ll k) {
     seg[id] = 1;
     return;
   }
+
   ll M = (L + R) / 2;
   if (k <= M)
     update(2 * id + 1, L, M, k);
@@ -41,9 +42,8 @@ int main() {
   for (int i = 0; i < n; i++) {
     int t;
     cin >> t;
-    cout << query(HEAD_NODE, 0, n - 1, t, n-1) << ' ';
-    update(HEAD_NODE, 0, n - 1, t - 1);
+    update(HEAD_NODE, 0, n - 1, t);
+    cout << query(HEAD_NODE, 0, n - 1, t, n-1) << endl;
   }
-  cout << endl;
   return 0;
 }
