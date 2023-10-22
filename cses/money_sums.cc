@@ -13,18 +13,19 @@ less<int>,
 rb_tree_tag,
 tree_order_statistics_node_update>
 ordered_set;
-int n, q, op;
-ll arr[200000], a, b;
+int n;
+bool arr[100000];
 int main() {
   cin.tie(NULL);
   ios_base::sync_with_stdio(false);
-  ordered_set set;
-  cin >> n >> q;
+  cin >> n;
   for (int i=0;i<n;i++) {
-    cin >> arr[i];
+    cin >> t;
   }
-  for (int i=0;i<q;i++) {
-    cin >> op >> a >> b;
+  for (int i=0;i<100000;i++) {
+    for (int j=0;j<n;j++) {
+      if (i - coins[j] >= 0) dp[i] = dp[i-coins[j]]
+    }
   }
   return 0;
 }
