@@ -9,7 +9,7 @@ int n, quer, a, b, p[300002], q[300002], r[300002], d[300002];
 
 int find(int i) {
     if (i == p[i]) return i;
-    int x = find(p[i]);
+    int x = find(p[i]); // caches results to shorten the tree
     p[i] = x;
     return x;
 }

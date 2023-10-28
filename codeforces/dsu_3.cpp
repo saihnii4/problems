@@ -1,41 +1,28 @@
+// barebones implementation of DSU
 #include <iostream>
-#include <utility>
-#include <string>
-
 using namespace std;
-
-string op;
-int n, m, a, b, p[200001];
-pair<int, int> q[200001];
-
-void merge(int a, int b) {
-    int x = find(a);
-    int y = find(b);
-    if (x == y) return;
-
+int n,q,op,a,b,g[100001];
+int find(int x) {
+  if (g[x] == x) return x; // the representative of a tree will always point to itself 
+  return find(g[x]);
 }
-
+void merge(int x, int y) {
+  if (x == y) return; // already connected
+  g[x] = find(y);
+}
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-
-    cin >> n >> m;
-
-    for (int i = 1; i <= n; i++) {
-        p[i] = i;
-        q[i] = 1;
+  cin >> n >> q;
+  for (int i=0;i<n;i++) {
+    g[i+1]=i+1;
+  }
+  for (int i=0;i<q;i++) {
+    cin >> op >> a;
+    if (op == 1) {
+      cout << find(a) << endl;
+    } else {
+      cin >> b;
+      merge(a, b);
     }
-
-    for (int i = 0; i < m; i++) {
-        cin >> op >> a;       
-
-        if (op == "join") {
-            cin >> b;
-        } else if (op == "add") {
-            cin >> b;
-
-        } else {
-
-        }
-    }
+  }
+  return 0;
 }
