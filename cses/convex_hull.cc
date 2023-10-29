@@ -5,7 +5,7 @@
 #include <set>
 using namespace std;
 using ll = long long;
-typedef pair<float, float> point;
+typedef pair<ll, ll> point;
 struct ConvexHull {
   int n;
   vector<point> elements;
@@ -44,16 +44,17 @@ struct ConvexHull {
       if (v == 0) 
         return (this->P0.first-prev.first)*(this->P0.first-prev.first)+(this->P0.second-prev.second)*(this->P0.second-prev.second) <
                (this->P0.first-next.first)*(this->P0.first-next.first)+(this->P0.second-next.second)*(this->P0.second-next.second);
-      return (v > 0);
+      return (v < 0);
     });
 
     int i = this->elements.size()-1;
-
+    while (i>=0&&this->orientation(this->P0,this->elements[i],this->elements.back()) == 0) i--;
+    reverse(this->elements.begin()+i+1, this->elements.end());
 
     for (int i=0;i<this->elements.size();i++) {
       // if stack is large enough (at least 2 points present to compare against)
       // AND if the orientation between the current point, the previous point and the previous PREVIOUS point
-      while (this->stack.size() >= 2 && (this->orientation(this->stack[this->stack.size()-2], this->stack.back(), this->elements[i]) >= 0))
+      while (this->stack.size() >= 2 && (this->orientation(this->stack[this->stack.size()-2], this->stack.back(), this->elements[i]) > 0))
         this->stack.pop_back();
       this->stack.push_back(this->elements[i]);
     }
@@ -73,7 +74,7 @@ vector<point> points;
 float x, y;
 int n;
 int main() {
-  freopen("sample","r",stdin);
+  /* freopen("sample","r",stdin); */
   cin >> n;
   for (int i=0;i<n;i++) {
     cin >> x >> y;
@@ -84,6 +85,8 @@ int main() {
   /* for (point p : c.elements) { */
   /*   cout << p.first << ' ' << p.second << endl; */
   /* } */
+  /* cout << endl; */
+  cout << c.stack.size() << endl;
   for (point p : c.stack) {
     cout << p.first << ' ' << p.second << endl;
   }
