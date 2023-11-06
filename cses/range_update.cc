@@ -1,59 +1,67 @@
 #include <iostream>
 #include <vector>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
-#define HEAD_NODE 0
-using ll = long long;
-typedef ll Key;
 using namespace std;
-using namespace __gnu_pbds;
-typedef tree<
-int,
-null_type,
-less<int>,
-rb_tree_tag,
-tree_order_statistics_node_update>
-ordered_set;
-int n,q,op,a,b;
-ll arr[200001],c,seg[400004];
-ll merge(ll L, ll R) {
-  return L + R;
-}
-void update(ll id, ll L, ll R, ll i, ll v) {
-  if (L == R) {
-    seg[id] += v;
-    return;
+using ll = long long;
+typedef ll node;
+int n, q;
+// optimized flexible segment tree
+struct BSegTree {
+  int HEAD = 0, n;
+  vector<node> arr, seg;
+  node DEFAULT_VALUE;
+  BSegTree(int n, vector<node> nodes, node deft) : n(n), arr(nodes), seg(2 * n), DEFAULT_VALUE(deft) {
+    for (int i = 0; i < n; i++) {
+      seg[n + i] = arr[i];
+    }
+    build();
   }
-  ll M=(L+R)/2;
-  if (i <= M) update(2*id+1,L,M,i,v);
-  else update(2*id+2,M+1,R,i,v);
-  seg[id] = merge(seg[2*id+1],seg[2*id+2]);
-}
-ll query(ll id, ll L, ll R, ll l, ll r) {
-  if (L == l && r == R) return seg[id];
-  ll M=(L+R)/2;
-  if (r <= M) return query(2*id+1,L,M,l,r);
-  else if (l >= M+1) return query(2*id+2,M+1,R,l,r);
-  else return merge(query(2*id+1,L,M,l,M),query(2*id+2,M+1,R,M+1,r));
-}
+  BSegTree(int n, node filler) : n(n), seg(2*n), DEFAULT_VALUE(filler) {
+    for (int i=0;i<=2*n;i++) {
+      seg[i] = 0;
+    }
+    build();
+  }
+
+  void build() {
+    for (int i = n - 1; i > 0; --i) {
+      seg[i] = merge(seg[i << 1], seg[i << 1 | 1]);
+    }
+  }
+
+  void update(ll i, ll v) {
+    for (seg[i += n] += v; i > 1; i >>= 1)
+      seg[i >> 1] = merge(seg[i], seg[i ^ 1]);
+  }
+
+  node query(ll l, ll r) {
+    node ans = DEFAULT_VALUE;
+    for (l += n, r += n; l < r; l >>= 1, r >>= 1) {
+      if (l&1) ans = merge(ans, seg[l++]);
+      if (r&1) ans = merge(ans, seg[--r]);
+    }
+    return ans;
+  }
+
+  node merge(node l, node r) { return l + r; }
+};
+
 int main() {
-  freopen("test.in","r",stdin);
-  /* freopen("test.out","w",stdout); */
-  cin.tie(NULL);
-  ios_base::sync_with_stdio(false);
   cin >> n >> q;
+  vector<ll> arr(n);
   for (int i=0;i<n;i++) {
     cin >> arr[i];
   }
+  auto tree = BSegTree(n+1, 0);
   for (int i=0;i<q;i++) {
+    int op, a, b;
+    ll k;
     cin >> op >> a;
     if (op == 1) {
-      cin >> b >> c;
-      update(HEAD_NODE,0,n,a-1,c);
-      update(HEAD_NODE,0,n,b,-c);
+      cin >> b >> k;
+      tree.update(a-1, k);
+      tree.update(b, -k);
     } else {
-      cout << arr[a-1] + query(HEAD_NODE,0,n,0,a-1) << endl;
+      cout << arr[a-1] + tree.query(0, a) << endl;
     }
   }
-  return 0;
 }
