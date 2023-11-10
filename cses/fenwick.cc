@@ -32,17 +32,22 @@ struct Fenwick {
   int sum(int l, int r) { return sum(r) - sum(l - 1); }
 };
 int main() {
-  int n, op, b;
+  int n, op, b, q;
   ll a;
   freopen("sample", "r", stdin);
-  auto tree = Fenwick({1, 2, 3, 4});
-  cin >> n;
-  for (int i = 0; i < n; i++) {
+  cin >> n >> q;
+  vector<ll> val(n);
+  for (int i=0;i<n;i++) {
+    cin >> val[i];
+  }
+  auto tree = Fenwick(val);
+  for (int i = 0; i < q; i++) {
     cin >> op >> a;
     if (op == 1) {
       cin >> b;
-      cout << tree.sum(a, b) << endl;
+      tree.add(a-1, b);
     } else {
+      cout << tree.sum(a, b) << endl;
     }
   }
   return 0;
