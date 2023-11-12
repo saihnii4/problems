@@ -156,4 +156,4 @@ template <typename T> struct PURQBSegTree {
 /*   } */
 /*   return 0; */
 /* } */
-
+seg
