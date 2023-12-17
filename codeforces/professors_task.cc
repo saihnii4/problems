@@ -6,5 +6,10 @@ int main() {
   cin >> q;
   for (int i=0;i<q;i++) {
     cin >> op >> x >> y;
+    if (op == 1) {
+
+    } else {
+
+    }
   }
 }

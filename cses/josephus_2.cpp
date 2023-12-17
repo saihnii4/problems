@@ -1,38 +1,24 @@
-// TODO:
-
-#include <stdio.h>
-#include <queue>
-
+#include <iostream>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
 using namespace std;
-
-int n;
-long long k, i = 1;
-
-queue<int> q;
-
+using namespace __gnu_pbds;
+using ordered_set = tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update>;
+ordered_set s;
+int j;
 int main() {
-    scanf("%d %lld", &n, &k);
-    long long z = k;
-    
-    for (int i = 1; i <= n; i++) {
-        q.push(i);
+  /* freopen("sample", "r", stdin); */
+  int n, k;
+  cin >> n >> k;
+  for (int i=1;i<=n;i++) s.insert(i);
+  while (s.size()) {
+    j += k;
+    if (j >= s.size()) {
+      j %= s.size();
     }
-
-    while (!q.empty()) {
-        z = (k % n);
-        if (z == 0) z = 1;
-        if (i % z == 0) {
-            printf("%d ", q.front());
-            q.pop();
-            --n;
-        } else {
-            q.push(q.front());
-            q.pop();
-        }
-
-        ++i;
-    }
-
-    printf("\n");
-    return 0;
+    cout << *s.find_by_order(j) << ' ';
+    s.erase(s.find_by_order(j));
+  }
+  cout << endl;
+  return 0;
 }

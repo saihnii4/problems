@@ -1,5 +1,7 @@
 #include <iostream>
 using namespace std;
 int main() {
-  cin >> n;
+  int n, m;
+  cin >> n >> m;
+
 }
