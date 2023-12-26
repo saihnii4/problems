@@ -57,13 +57,11 @@ struct st {
   }
   void rollback() {
     for (operation o : ops) {
-      
+
     }
   }
   void rollback(ll id, ll L, ll R, ll i) {
-    if (L == R) {
 
-    }
   }
 };
 st seg;
